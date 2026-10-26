@@ -1,0 +1,100 @@
+- name: Deploy Flask DevOps Dashboard
+  hosts: app
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install Docker prerequisites
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+        update_cache: true
+
+    - name: Create Docker keyring directory
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Download Docker signing key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+
+    - name: Configure Docker repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        filename: docker
+        state: present
+
+    - name: Install Docker Engine
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Enable and start Docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    
+    - name: Create application directory
+      ansible.builtin.file:
+        path: /opt/devops-dashboard
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+
+    - name: Copy application files only
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../{{ item }}"
+        dest: /opt/devops-dashboard/
+        owner: ubuntu
+        group: ubuntu
+        mode: preserve
+      loop:
+        - app.py
+        - Dockerfile
+        - requirements.txt
+        - templates
+        - static
+
+
+    - name: Build dashboard image
+      community.docker.docker_image:
+        name: devops-dashboard
+        tag: latest
+        source: build
+        build:
+          path: /opt/devops-dashboard
+        state: present
+
+    - name: Start dashboard container
+      community.docker.docker_container:
+        name: devops-dashboard
+        image: devops-dashboard:latest
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "5000:5000"
+
+    - name: Check application health
+      ansible.builtin.uri:
+        url: http://127.0.0.1:5000/health
+        status_code: 200
+        return_content: true
+      register: health_result
+      retries: 5
+      delay: 3
+      until: health_result.status == 200
