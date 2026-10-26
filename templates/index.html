@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="DevOps Deployment Dashboard for Flask application health, runtime metrics, and deployment information.">
+
+    <title>DevOps Dashboard | DevOpsHub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"
+            defer></script>
+</head>
+
+<body>
+    <header>
+        <div class="brand">DevOps<span>Hub</span></div>
+
+        <div class="status">
+            <span class="dot"></span>
+            Application Monitoring
+        </div>
+    </header>
+
+    <main>
+        <!-- Dashboard heading and controls -->
+        <section class="dashboard-toolbar">
+            <div>
+                <p class="eyebrow">INFRASTRUCTURE & DEPLOYMENT</p>
+
+                <h1>Deployment Dashboard</h1>
+
+                <p class="subtitle">
+                    Monitor your Flask application, inspect runtime details,
+                    and verify application health from one place.
+                </p>
+            </div>
+
+            <div class="toolbar-actions">
+                <span id="connection-indicator"
+                      class="connection">
+                    Connecting...
+                </span>
+
+                <button id="refresh-button"
+                        class="button secondary"
+                        type="button">
+                    Refresh status
+                </button>
+            </div>
+        </section>
+
+        <!-- Application overview -->
+        <section aria-labelledby="overview-heading">
+            <p class="eyebrow" id="overview-heading">APPLICATION OVERVIEW</p>
+
+            <div class="metrics-grid">
+                <article class="card">
+                    <p>APPLICATION STATUS</p>
+
+                    <h2 id="app-status" class="value">
+                        Loading...
+                    </h2>
+
+                    <span>Flask health endpoint</span>
+                </article>
+
+                <article class="card">
+                    <p>APPLICATION VERSION</p>
+
+                    <h2 id="app-version" class="value">
+                        —
+                    </h2>
+
+                    <span>Current release</span>
+                </article>
+
+                <article class="card">
+                    <p>ENVIRONMENT</p>
+
+                    <h2 id="environment" class="value">
+                        —
+                    </h2>
+
+                    <span>Configured runtime environment</span>
+                </article>
+
+                <article class="card">
+                    <p>PROCESS UPTIME</p>
+
+                    <h2 id="uptime" class="value">
+                        —
+                    </h2>
+
+                    <span>Time since application start</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- Runtime information -->
+        <section class="panel" aria-labelledby="runtime-heading">
+            <p class="eyebrow">SYSTEM INFORMATION</p>
+
+            <h2 id="runtime-heading">Runtime details</h2>
+
+            <p class="subtitle">
+                Information reported by the running Flask process.
+            </p>
+
+            <div class="detail-row">
+                <span>Hostname</span>
+                <strong id="hostname">Loading...</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Python version</span>
+                <strong id="python-version">Loading...</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Application started</span>
+                <strong id="started-at">Loading...</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Deployment timestamp</span>
+                <strong id="deployed-at">Loading...</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Last status refresh</span>
+                <strong id="last-checked">Loading...</strong>
+            </div>
+        </section>
+
+        <!-- Application health check -->
+        <section class="panel" aria-labelledby="health-heading">
+            <p class="eyebrow">DIAGNOSTICS</p>
+
+            <h2 id="health-heading">Application health check</h2>
+
+            <p class="subtitle">
+                Send a request to the Flask health endpoint and verify
+                that the application returns a healthy response.
+            </p>
+
+            <button id="health-check-button"
+                    class="button"
+                    type="button">
+                Run health check
+            </button>
+
+            <p id="health-result"
+               class="health-result"
+               role="status"
+               aria-live="polite">
+                No health check has been run yet.
+            </p>
+        </section>
+
+        <!-- Deployment pipeline overview -->
+        <section class="deployment" aria-labelledby="pipeline-heading">
+            <div>
+                <p class="eyebrow">AUTOMATION</p>
+
+                <h2 id="pipeline-heading">Deployment pipeline</h2>
+
+                <p class="subtitle">
+                    The planned workflow for provisioning and deploying
+                    this application.
+                </p>
+            </div>
+
+            <div class="pipeline" aria-label="Deployment workflow">
+                <span>GitHub</span>
+                <b aria-hidden="true">→</b>
+
+                <span>Actions</span>
+                <b aria-hidden="true">→</b>
+
+                <span>Terraform</span>
+                <b aria-hidden="true">→</b>
+
+                <span>Ansible</span>
+                <b aria-hidden="true">→</b>
+
+                <span>Flask</span>
+            </div>
+
+            <p class="subtitle">
+                Pipeline stages are shown for reference. Live CI/CD
+                execution status will be integrated separately.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                DevOpsHub · Flask · Docker · Terraform · Ansible
+            </p>
+
+            <p>
+                <a href="/health" target="_blank" rel="noopener">
+                    View health endpoint
+                </a>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

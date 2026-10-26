@@ -1,0 +1,290 @@
+
+:root {
+    color-scheme: dark;
+    font-family: Inter, system-ui, sans-serif;
+    background: #0b1020;
+    color: #edf2ff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 8%;
+    border-bottom: 1px solid #222a40;
+}
+
+.brand {
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.brand span {
+    color: #7c9cff;
+}
+
+.status {
+    color: #b8c5df;
+    font-size: 0.9rem;
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #43d9a3;
+}
+
+main {
+    width: min(1050px, 84%);
+    margin: 75px auto 30px;
+}
+
+.eyebrow {
+    color: #91a9ff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+}
+
+h1 {
+    margin: 18px 0;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.06em;
+}
+
+.subtitle {
+    max-width: 600px;
+    color: #a6b1c9;
+    line-height: 1.8;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 42px 0;
+}
+
+.card, .deployment {
+    padding: 24px;
+    background: #121a2e;
+    border: 1px solid #26314c;
+    border-radius: 16px;
+}
+
+.card p {
+    color: #91a9ff;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+}
+
+.card h2 {
+    margin-bottom: 8px;
+}
+
+.card span, footer {
+    color: #a6b1c9;
+    font-size: 0.9rem;
+}
+
+.deployment {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.pipeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pipeline span {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #202b45;
+}
+
+.pipeline b {
+    color: #91a9ff;
+}
+
+footer {
+    padding: 35px 0 15px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 20px 5%;
+    }
+
+    main {
+        width: 90%;
+        margin-top: 45px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.dashboard-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+}
+
+.dashboard-toolbar h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.connection {
+    font-size: 0.85rem;
+    color: #a6b1c9;
+}
+
+.connection::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.connection.online {
+    color: #43d9a3;
+}
+
+.connection.offline {
+    color: #ff7777;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.value {
+    overflow-wrap: anywhere;
+}
+
+.status-good {
+    color: #43d9a3;
+}
+
+.status-bad {
+    color: #ff7777;
+}
+
+.panel {
+    margin-bottom: 20px;
+    padding: 26px;
+    background: #121a2e;
+    border: 1px solid #26314c;
+    border-radius: 16px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #26314c;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    color: #a6b1c9;
+}
+
+.detail-row strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.button {
+    padding: 11px 16px;
+    border: 1px solid #91a9ff;
+    border-radius: 9px;
+    background: #5878ee;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+.button.secondary {
+    background: transparent;
+    color: #cbd6ff;
+}
+
+.button:hover {
+    filter: brightness(1.12);
+}
+
+.button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+.health-result {
+    margin-top: 18px;
+    color: #a6b1c9;
+    line-height: 1.6;
+}
+
+.health-result.success {
+    color: #43d9a3;
+}
+
+.health-result.failure {
+    color: #ff7777;
+}
+
+@media (max-width: 600px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .detail-row strong {
+        text-align: left;
+    }
+}
